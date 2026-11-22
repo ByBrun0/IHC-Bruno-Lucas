@@ -1,29 +1,45 @@
-# UX-Agent de IHC · P3
+# UX-Agent · P3 de Interação Humano-Computador
 
-Implementação acadêmica do aplicativo fictício de lembretes e registros. Requer Node.js 22 ou posterior. Usa apenas bibliotecas nativas.
+Lucas Cerqueira Portela e Bruno Prado dos Santos · Engenharia de Computação · CEFET-MG, Campus Divinópolis
 
-| Objetivo | Comando |
-|---|---|
-| Interface web | `npm start`, depois abrir http://127.0.0.1:3000 |
-| Verificação automatizada | `npm test` |
-| Verificação local com ações dirigidas | `npm run technical` |
-| Piloto com LLM | `npm run pilot`, após configurar a variável de ambiente `OPENAI_API_KEY` com acesso autorizado |
+Aplicativo acadêmico de lembretes e registros fictícios. O agente recebe os sinais visíveis da interface, escolhe uma ação permitida por turno e tem o resultado conferido por um verificador independente.
 
-O servidor serve apenas em loopback. O piloto roda C2/C4 em quatro sequências contrabalançadas, duas repetições por sequência, para referência fixa e controle neutro. As sementes são 20261026–20261033 por configuração. Variável opcional `UXAGENT_MODEL` seleciona o modelo; o padrão é `gpt-6-luna`. A configuração amostrada está disponível no motor por `createSession({id, mode:'sampled', seed})`. É um modo exploratório, fora do piloto principal. O controle neutro é contraste técnico. Cada rodada gera uma subpasta em `results/technical` ou `results/api`. Confira erros de API e versão do modelo antes de interpretar resultados.
+## Como avaliar localmente
 
-Entre tentativas, preserva-se apenas o repertório M4. As memórias de observação e de marcos recomeçam. Nenhum identificador interno de ocorrência, solução privada ou modelo do analista entra na observação. Os identificadores opacos são descartados no próximo turno; o executor apenas aceita opções da observação correspondente. O texto fixo veio da A2. O painel de auditoria é exibido após o encerramento.
+É necessário Node.js 22 ou posterior. O projeto usa apenas bibliotecas nativas do Node.js.
 
-## Dados e validação
+```sh
+git clone https://github.com/ByBrun0/IHC-Bruno-Lucas.git
+cd IHC-Bruno-Lucas
+npm test
+npm start
+```
 
-O modo técnico usa ações dirigidas, sem modelo ou participantes. As duas tarefas reservadas permanecem sob custódia da A2 e estão fora dos cenários executáveis deste pacote. A API recebe somente dados fictícios. Privilégios da chave ficam na variável de ambiente; os registros preservam o corpo enviado, a latência e o identificador de resposta disponível sem copiar o cabeçalho de autorização.
+Abra http://127.0.0.1:3000 e selecione C2 ou C4 e a variante A ou B. O aplicativo mostra o registro da tentativa após o encerramento. No Windows, se o PowerShell bloquear o atalho do npm, use `npm.cmd`.
 
-Consulte `DICIONARIO_EVENTOS.md` para auditoria. Os limites são de 40 ações e 60 propostas por tentativa; três propostas inválidas consecutivas encerram com falha técnica. O relatório separa latência computacional da referência analítica de usuário experiente.
+## Execuções e resultados
 
+| Comando | Finalidade |
+| --- | --- |
+| `npm run technical` | Verifica o sistema com ações dirigidas, sem LLM ou credencial |
+| `npm run pilot:codex -- --smoke` | Verifica uma sessão com o Codex autenticado pelo ChatGPT |
+| `npm run pilot:codex` | Executa o piloto C2/C4 com o Codex, sem chave da API |
+| `npm run pilot` | Alternativa via OpenAI API com credencial própria e faturamento separado |
 
-## Piloto pelo ChatGPT Plus
+Para executar pelo Codex, instale a CLI oficial, autentique-se com sua conta ChatGPT e confira o login com `codex login status`. O modo usa a franquia da conta autenticada. Pode-se fixar o modelo com a variável `UXAGENT_MODEL`. O modo Codex só usa a observação e a lista de ações no turno, com saída estruturada e sessões independentes. A P3 rejeita ações fora das opções válidas e resultados que envolvam ferramentas da CLI.
 
-O modo de assinatura usa a ferramenta oficial Codex CLI autenticada com ChatGPT. Use codex login status para conferir se a sessão está autenticada com ChatGPT. O comando npm run pilot:codex -- --smoke verifica uma sessão. O comando npm run pilot:codex roda o piloto completo. As rodadas ficam em results/codex.
+A rodada completa usa quatro sequências contrabalançadas, duas repetições por sequência, para referência fixa e controle neutro. As sementes são 20261026–20261033 por configuração. Apenas C2 e C4 estão disponíveis para execução. O controle neutro serve à comparação técnica; a configuração amostrada está disponível no motor como modo exploratório.
 
-Cada turno executa em uma pasta vazia, com sessão independente, saída estruturada e shell e busca desabilitados. O programa rejeita rodadas que envolvam ferramentas. Não existe fallback para a API com chave neste modo. O comando usa a franquia do Codex da conta conectada. Para evitar custos adicionais, confira o saldo do plano e mantenha desativada qualquer recarga automática de créditos antes do piloto completo.
+Os registros locais ficam em `results/technical`, `results/codex` ou `results/api`. Consulte o [dicionário dos eventos](DICIONARIO_EVENTOS.md). A publicação inicial contém o código e os testes locais. O piloto real com o Codex está pendente. O caderno de design, o artigo, os registros do piloto e a demonstração integram os entregáveis separados da P3.
 
-Por padrão, o piloto usa o modelo selecionado automaticamente pela CLI. Para fixar um modelo disponível no seu plano, configure UXAGENT_MODEL e documente o identificador no manifesto.
+## Organização do código
+
+| Caminho | Função |
+| --- | --- |
+| `public/` | Interface interativa no navegador |
+| `src/engine.mjs` e `src/transitions.json` | Máquina de estados, observação, mecanismos M1–M4, eventos e verificação de sucesso |
+| `src/scenarios/` e `src/evaluator/` | Cenários C2/C4 e regras privadas usadas pelo verificador |
+| `src/pilot.mjs` e `src/codex-provider.mjs` | Execução do piloto e integração pelo login do ChatGPT |
+| `test/` | Testes locais de fluxo, isolamento da observação e verificação |
+
+As memórias de observação e de navegação reiniciam a cada tentativa. O repertório M4 é preservado entre as duas tentativas da mesma sessão. A lista de ações tem identificadores descartáveis e a observação exclui os critérios do avaliador e os modelos de análise de tarefas. O piloto limita cada tentativa a 40 ações ou 60 propostas e encerra por falha técnica após três propostas inválidas consecutivas. Os resultados da verificação dirigida ajudam a testar o instrumento.

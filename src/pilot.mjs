@@ -1,13 +1,15 @@
 import { readFile, mkdir, writeFile } from 'node:fs/promises';
 import { randomUUID } from 'node:crypto';
+import { askCodex } from './codex-provider.mjs';
 import { performance } from 'node:perf_hooks';
 import { createSession, startTask, observe, execute, finish, closeSession, macEvents, VERSION } from './engine.mjs';
 
 const type=process.argv[2];
-if (!['technical','api'].includes(type)) throw new Error('Use technical ou api');
+if (!['technical','api','codex'].includes(type)) throw new Error('Use technical, api ou codex');
 const key=process.env.OPENAI_API_KEY;
 if (type==='api' && !key) throw new Error('Configure OPENAI_API_KEY antes do piloto.');
-const model=process.env.UXAGENT_MODEL || 'gpt-6-luna';
+const model=process.env.UXAGENT_MODEL || (type==='codex' ? null : 'gpt-6-luna');
+const smoke=process.argv.includes('--smoke');
 const prompt=(await readFile(new URL('./prompt.txt',import.meta.url),'utf8')).trim();
 const tasks=['C2','C4'];
 const sequences=[[tasks,['A','B']],[tasks,['B','A']],[[...tasks].reverse(),['A','B']],[[...tasks].reverse(),['B','A']]];
@@ -60,15 +62,15 @@ function localAction(task, turn, observation) {
   return {observation_id:observation.observation_id,action_id:pick?.id};
 }
 
-const modes=type==='api'?['fixed','neutral']:['neutral'];
-const manifest={type,version:VERSION,created:new Date().toISOString(),model:type==='api'?model:null,sessions:[]};
+const modes=type==='technical'||smoke?['neutral']:['fixed','neutral'];
+const manifest={type,version:VERSION,created:new Date().toISOString(),model:type==='technical'?null:model,smoke,sessions:[]};
 let apiStopped=false;
 for (const mode of modes) {
-  for (let i=0;i<(type==='api'?8:4);i++) {
+  for (let i=0;i<(smoke?1:type==='technical'?4:8);i++) {
     if (apiStopped) break;
     const [order,variants]=sequences[i%4];
     const id=type+'-'+randomUUID();
-    const session=createSession({id,mode,seed:20261026+i,origin:type==='api'?'synthetic_llm':'technical'});
+    const session=createSession({id,mode,seed:20261026+i,origin:type==='technical'?'technical':'synthetic_llm'});
     const requests=[];
     const results=[];
     for (let position=0;position<2;position++) {
@@ -78,14 +80,16 @@ for (const mode of modes) {
         const observation=observe(session);
         if (type==='technical') execute(session,localAction(task,turn,observation));
         else {
-          const answer=await ask(observation,id+':'+position+':'+turn);
+          const answer=type==='codex' ? await askCodex(observation,prompt,model) : await ask(observation,id+':'+position+':'+turn);
           requests.push({task,position:position+1,turn,...answer});
+          if (type==='codex') console.log(task, 'turno', turn+1, answer.failed ? 'falha' : 'resposta recebida');
           if (answer.failed) {
             finish(session,'technical');
-            if (answer.calls.some(call=>[400,401,403,404,429].includes(call.status))) apiStopped=true;
+            if (type==='codex' || answer.calls.some(call=>[400,401,403,404,429].includes(call.status))) apiStopped=true;
             break;
           }
           execute(session,answer.action);
+          if (smoke && turn===7 && !session.attempt.result) finish(session,'limit');
         }
       }
       results.push({task,variant:variants[position],...session.attempt.result});
@@ -104,4 +108,3 @@ manifest.interrupted=apiStopped;
 await writeFile(new URL('manifest.json',output),JSON.stringify(manifest,null,2));
 console.log(JSON.stringify({origin:type,run:runId,sessions:manifest.sessions.length,attempts:manifest.sessions.reduce((n,s)=>n+s.results.length,0),interrupted:apiStopped},null,2));
 if(apiStopped) process.exitCode=1;
-

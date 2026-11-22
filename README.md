@@ -19,3 +19,11 @@ O modo técnico usa ações dirigidas, sem modelo ou participantes. As duas tare
 
 Consulte `DICIONARIO_EVENTOS.md` para auditoria. Os limites são de 40 ações e 60 propostas por tentativa; três propostas inválidas consecutivas encerram com falha técnica. O relatório separa latência computacional da referência analítica de usuário experiente.
 
+
+## Piloto pelo ChatGPT Plus
+
+O modo de assinatura usa a ferramenta oficial Codex CLI autenticada com ChatGPT. Use codex login status para conferir se a sessão está autenticada com ChatGPT. O comando npm run pilot:codex -- --smoke verifica uma sessão. O comando npm run pilot:codex roda o piloto completo. As rodadas ficam em results/codex.
+
+Cada turno executa em uma pasta vazia, com sessão independente, saída estruturada e shell e busca desabilitados. O programa rejeita rodadas que envolvam ferramentas. Não existe fallback para a API com chave neste modo. O comando usa a franquia do Codex da conta conectada. Para evitar custos adicionais, confira o saldo do plano e mantenha desativada qualquer recarga automática de créditos antes do piloto completo.
+
+Por padrão, o piloto usa o modelo selecionado automaticamente pela CLI. Para fixar um modelo disponível no seu plano, configure UXAGENT_MODEL e documente o identificador no manifesto.

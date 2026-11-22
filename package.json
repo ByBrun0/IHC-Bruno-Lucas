@@ -1,0 +1,15 @@
+{
+  "name": "ux-agent-ihc",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node src/server.mjs",
+    "test": "node --test",
+    "technical": "node src/pilot.mjs technical",
+    "pilot": "node src/pilot.mjs api"
+  }
+}

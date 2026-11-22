@@ -1,0 +1,47 @@
+{
+  "task_id": "C4",
+  "initial_screen": "R",
+  "initial_occurrence_id": "x04",
+  "clock": "12:10",
+  "occurrences": [
+    {
+      "occurrence_id": "x04",
+      "item": "Gama",
+      "date": "2026-10-26",
+      "time": "12:00",
+      "state": "pending",
+      "report_id": null,
+      "report_voided": [],
+      "public_version": 1,
+      "reminder_presented": true,
+      "reported_at": null
+    }
+  ],
+  "instruction": "Abra a ajuda sobre os estados e consulte o Item Gama das 12:00 de hoje. Informe o estado do registro e se ele permite saber que o item foi ingerido. Não altere os registros.",
+  "public_answers": [
+    [
+      "pending",
+      "ingested"
+    ],
+    [
+      "pending",
+      "not_ingested"
+    ],
+    [
+      "pending",
+      "indeterminate"
+    ],
+    [
+      "reported",
+      "ingested"
+    ],
+    [
+      "reported",
+      "not_ingested"
+    ],
+    [
+      "reported",
+      "indeterminate"
+    ]
+  ]
+}

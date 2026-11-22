@@ -1,0 +1,51 @@
+{
+  "task_id": "C2",
+  "initial_screen": "I",
+  "initial_occurrence_id": null,
+  "clock": "20:10",
+  "occurrences": [
+    {
+      "occurrence_id": "x01",
+      "item": "Alfa",
+      "date": "2026-10-26",
+      "time": "08:00",
+      "state": "pending",
+      "report_id": null,
+      "report_voided": [],
+      "public_version": 1,
+      "reminder_presented": true,
+      "reported_at": null
+    },
+    {
+      "occurrence_id": "x02",
+      "item": "Beta",
+      "date": "2026-10-26",
+      "time": "20:00",
+      "state": "reported",
+      "report_id": "r02",
+      "report_voided": [],
+      "public_version": 1,
+      "reminder_presented": false,
+      "reported_at": "2026-10-26T20:05:00"
+    }
+  ],
+  "instruction": "Consulte os detalhes do Item Alfa das 08:00 e do Item Beta das 20:00 de hoje. Informe em quais há relato registrado, na ordem Alfa e Beta. Não altere os registros.",
+  "public_answers": [
+    [
+      "pending",
+      "pending"
+    ],
+    [
+      "pending",
+      "reported"
+    ],
+    [
+      "reported",
+      "pending"
+    ],
+    [
+      "reported",
+      "reported"
+    ]
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "I": [
+    "reminder",
+    "history",
+    "latest",
+    "help",
+    "finish",
+    "quit"
+  ],
+  "R": [
+    "report",
+    "close_reminder",
+    "home",
+    "history",
+    "latest",
+    "help",
+    "answer",
+    "finish",
+    "quit"
+  ],
+  "H": [
+    "date",
+    "detail",
+    "home",
+    "latest",
+    "help",
+    "finish",
+    "quit"
+  ],
+  "U": [
+    "correct",
+    "home",
+    "history",
+    "help",
+    "answer",
+    "finish",
+    "quit"
+  ],
+  "D": [
+    "correct",
+    "back",
+    "home",
+    "history",
+    "latest",
+    "help",
+    "answer",
+    "finish",
+    "quit"
+  ],
+  "E": [
+    "cancel",
+    "void",
+    "help",
+    "quit"
+  ],
+  "J": [
+    "close_help",
+    "help_more",
+    "quit"
+  ],
+  "F": []
+}

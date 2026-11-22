@@ -1,0 +1,47 @@
+{
+  "version": "1.1",
+  "text": "OK / Registrar que tomei registra um relato; fechar o lembrete não registra. Hist. / Ver histórico abre o histórico. O lápis / Corrigir relato abre a correção, que precisa ser confirmada. Tomada relatada informa um registro digital válido. Pendente / Sem confirmação registrada informa ausência de relato digital válido. Nenhum desses estados comprova ingestão.",
+  "dictionary_insertion_order": [
+    {
+      "association_id": "L1",
+      "aliases": [
+        "OK",
+        "Registrar que tomei"
+      ],
+      "meaning": "registrar relato"
+    },
+    {
+      "association_id": "L2",
+      "aliases": [
+        "Hist.",
+        "Ver histórico"
+      ],
+      "meaning": "abrir histórico"
+    },
+    {
+      "association_id": "L3",
+      "aliases": [
+        "lápis",
+        "Corrigir relato"
+      ],
+      "meaning": "abrir confirmação de correção"
+    },
+    {
+      "association_id": "L4",
+      "aliases": [
+        "Tomada relatada"
+      ],
+      "meaning": "há relato digital válido"
+    },
+    {
+      "association_id": "L5",
+      "aliases": [
+        "Pendente",
+        "Sem confirmação registrada"
+      ],
+      "meaning": "não há relato válido"
+    }
+  ],
+  "source": "A",
+  "no_private_answers": true
+}

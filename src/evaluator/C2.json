@@ -1,0 +1,45 @@
+{
+  "allowed_mutations": [],
+  "required_consults": [
+    {
+      "occurrence_id": "x01",
+      "screens": [
+        "U",
+        "D"
+      ],
+      "after": null
+    },
+    {
+      "occurrence_id": "x02",
+      "screens": [
+        "U",
+        "D"
+      ],
+      "after": null
+    }
+  ],
+  "expected_answer": [
+    "pending",
+    "reported"
+  ],
+  "required_help": false,
+  "baseline": {
+    "O": 6,
+    "R": 3,
+    "M": 2
+  },
+  "reference_method": [
+    "history",
+    "detail:x01",
+    "back",
+    "detail:x02",
+    "answer:pending,reported",
+    "finish"
+  ],
+  "requirements": [
+    "consult:x01",
+    "consult:x02",
+    "answer",
+    "preserve_all"
+  ]
+}

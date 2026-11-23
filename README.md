@@ -31,3 +31,5 @@ Esta versão apresenta a revisão visual do aplicativo. As instruções, os atal
 A pasta [revisao-visual](revisao-visual/) contém as telas, o complemento de design e o vídeo de uma verificação dirigida no navegador. Os dados e o vídeo em entrega/ correspondem ao piloto da interface anterior, preservado na branch main.
 
 A revisão 1.2 simplifica a ajuda e a instrução de C4. Fizemos uma tentativa curta com Luna e limite de cinco chamadas. O agente atingiu o limite sem responder. Os dados estão em revisao-visual. Para repetir essa tentativa, use node src/piloto-curto.mjs com o Codex CLI autenticado. Cada execução faz até cinco chamadas e usa a franquia da conta.
+
+Para repetir as duas tentativas locais, inicie o Ollama com o modelo qwen3:4b-instruct-2507-q4_K_M instalado e execute node src/piloto-ollama.mjs. O script usa apenas o serviço local e limita C4 a cinco chamadas e C2 a doze. Os resultados da rodada estão em revisao-visual/Dados_Ollama_Interface_1_2.zip.

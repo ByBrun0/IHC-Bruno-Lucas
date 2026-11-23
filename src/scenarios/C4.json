@@ -17,7 +17,7 @@
       "reported_at": null
     }
   ],
-  "instruction": "Abra a ajuda sobre os estados e consulte o Item Gama das 12:00 de hoje. Informe o estado do registro e se ele permite saber que o item foi ingerido. Não altere os registros.",
+  "instruction": "Abra Ajuda e confira o Item Gama das 12:00. Depois, responda: há uma tomada registrada? Dá para saber pelo aplicativo se a pessoa tomou o medicamento? Nesta tarefa, apenas consulte os dados.",
   "public_answers": [
     [
       "pending",

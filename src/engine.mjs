@@ -1,7 +1,7 @@
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 
-export const VERSION = '1.0.0';
+export const VERSION = '1.2.0';
 const load = name => JSON.parse(readFileSync(new URL(name, import.meta.url), 'utf8'));
 const transitions = load('./transitions.json');
 const help = load('./ajuda.json');
@@ -137,7 +137,7 @@ export function publicView(session) {
     button('void', 'Confirmar correção');
   }
   if (at.screen === 'J') {
-    content.push(help.text);
+    content.push(...help.text.split('\n'));
     if (at.helpLayer === 'expandida') content.push('Para conferir um horário, compare item, data e hora no detalhe. Um relato desfeito é histórico de uma correção. Para sair da ajuda, use Voltar à tarefa.');
     else button('help_more','Entender os registros');
     button('close_help','Voltar à tarefa');

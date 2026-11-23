@@ -1,6 +1,6 @@
 {
-  "version": "1.1",
-  "text": "OK / Registrar que tomei registra um relato; fechar o lembrete não registra. Hist. / Ver histórico abre o histórico. O lápis / Corrigir relato abre a correção, que precisa ser confirmada. Tomada relatada informa um registro digital válido. Pendente / Sem confirmação registrada informa ausência de relato digital válido. Nenhum desses estados comprova ingestão.",
+  "version": "1.2",
+  "text": "Tomada relatada: alguém registrou que tomou o medicamento.\nSem confirmação registrada: ninguém registrou a tomada. Nos rótulos curtos, aparece como “Pendente”.\nO aplicativo guarda relatos. Ele não consegue verificar se a pessoa tomou o medicamento.\nHistórico: mostra os registros por dia. Último registro: abre o relato válido mais recente.\nRegistrar que tomei (ou OK): salva um relato. Fechar lembrete: sai do aviso sem salvar.\nCorrigir relato (ou o botão com lápis): abre a confirmação para desfazer um relato.",
   "dictionary_insertion_order": [
     {
       "association_id": "L1",

@@ -3,7 +3,7 @@ import { mkdtemp, writeFile, rm, rmdir } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
-export async function askCodex(observation, instructions, model) {
+export async function askCodex(observation, instructions, model, effort = null) {
   const schema = {
     type: 'object', additionalProperties: false, required: ['observation_id', 'action_id', 'arguments'],
     properties: {
@@ -13,7 +13,7 @@ export async function askCodex(observation, instructions, model) {
     },
   };
   const input = instructions + '\nEscolha somente um ID da observação. Não use ferramentas.\n' + JSON.stringify(observation);
-  const request = { provider: 'codex_chatgpt', model, input, schema };
+  const request = { effort, provider: 'codex_chatgpt', model, input, schema };
   const folder = await mkdtemp(join(tmpdir(), 'uxagent-turn-'));
   try {
     await writeFile(join(folder, 'schema.json'), JSON.stringify(schema));
@@ -25,6 +25,7 @@ export async function askCodex(observation, instructions, model) {
       '--disable', 'shell_tool', '-c', 'web_search="disabled"', '-c', 'forced_login_method="chatgpt"',
       '--json', '--output-schema', join(folder, 'schema.json')];
     if (model) args.push('--model', model);
+    if (effort) args.push('-c', 'model_reasoning_effort=' + JSON.stringify(effort));
     args.push('-');
     const started = performance.now();
     const run = await new Promise(resolve => {

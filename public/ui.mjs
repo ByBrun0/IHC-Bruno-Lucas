@@ -114,7 +114,21 @@ async function step(actionId, answering = false) {
 
   const outcomes = { success: 'Tarefa concluída com sucesso.', failure: 'A tarefa terminou sem cumprir todos os critérios.', unknown: 'Não foi possível verificar o resultado.' };
   $('#heading').textContent = 'Tentativa encerrada';
-  $('#content').replaceChildren(element('p', outcomes[data.result.status] ?? 'Confira o registro da tentativa.'));
+  const feedback = [element('p', outcomes[data.result.status] ?? 'Confira o registro da tentativa.')];
+  if (data.result.status === 'failure' && data.result.reason === 'finish') {
+    const errors = data.events.filter(event => event.type === 'error_marked').map(event => event.error);
+    const reasons = [];
+    if (errors.some(error => error.requirement === 'preserve_all')) {
+      reasons.push('Esta tarefa pedia apenas consulta. Um registro foi alterado durante a tentativa.');
+    }
+    if (errors.some(error => error.requirement === 'help')) reasons.push('Faltou abrir a Ajuda, como a tarefa pedia.');
+    if (errors.some(error => error.requirement?.startsWith('consult:'))) reasons.push('Faltou consultar um dos registros pedidos.');
+    const answered = data.events.some(event => event.type === 'action_executed' && event.action === 'answer');
+    if (!answered) reasons.push('Faltou selecionar uma resposta.');
+    else if (errors.some(error => error.requirement === 'answer')) reasons.push('Confira se a resposta descreve o registro apresentado na tarefa.');
+    feedback.push(...reasons.map(reason => element('p', reason)));
+  }
+  $('#content').replaceChildren(...feedback);
   $('#actions').replaceChildren();
   for (const selector of ['#navigation', '#answer', '#outcome-controls']) $(selector).hidden = true;
   $('#audit').hidden = false;

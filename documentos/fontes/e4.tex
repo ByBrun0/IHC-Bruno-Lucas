@@ -4,7 +4,7 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-Este trabalho apresenta uma aplicação web local para a execução de tarefas fictícias de lembrete e registro de tomada por um agente proxy baseado em modelo de linguagem. O sistema compartilha a representação pública de tela e ações entre a interface e a observação textual. A execução obedece às transições da conversa e o verificador externo avalia o desfecho. Foram verificadas a instrumentação, a ajuda sob demanda e a ausência dos campos privados conhecidos na observação, por meio de ações dirigidas nas tarefas de calibração. O piloto com LLM registrou 17 tentativas: oito sucessos, oito insucessos e um desfecho desconhecido. O conjunto reduzido permite avaliar o funcionamento, sem validar a persona ou o contraste entre condições. A comparação com KLM distingue contagem de ações, referência de especialista e tempo computacional.
+Este trabalho apresenta uma aplicação web local para a execução de tarefas fictícias de lembrete e registro de tomada por um agente proxy baseado em modelo de linguagem. O sistema compartilha a representação pública de tela e ações entre a interface e a observação textual. A execução obedece às transições da conversa e o verificador externo avalia o desfecho. Foram verificadas a instrumentação, a ajuda sob demanda e a ausência dos campos privados conhecidos na observação, por meio de ações dirigidas nas tarefas de calibração. Na interface revisada, cinco tentativas com três modelos produziram um sucesso em C2. Em C4, o agente voltou repetidamente à ajuda ou desistiu. As observações orientam a revisão da interface e não substituem uma avaliação com pessoas. A comparação com KLM distingue contagem de ações, referência de especialista e tempo computacional.
 \end{abstract}
 \begin{IEEEkeywords}
 UX-Agent, instrumentação, comunicabilidade, KLM, dados sintéticos.
@@ -53,7 +53,7 @@ As contagens são compatíveis com H/H de C2 (6 ações, 10,50~s) e C4 (4 açõe
 \input{resultados_p3}
 
 \section{Ameaças à validade e conclusão}
-A transcrição textual preserva o conteúdo sem replicar leitura visual e movimentação. A máscara de sinais em A introduz uma diferença modelada. Os mecanismos vêm de hipóteses da A2 e os dados disponíveis não fornecem comparação humana diretamente compatível. Contagens simuladas, respostas estruturadas do modelo e referência KLM não estimam adesão, ingestão, satisfação ou experiência da população. Foi possível verificar localmente a cadeia observação--ação--evento--desfecho. A execução com LLM confirmou a cadeia de registro, mas a amostra desbalanceada e o contexto gerenciado pela CLI limitam a reprodução e não autorizam afirmações de alinhamento humano.
+A transcrição textual preserva o conteúdo sem replicar leitura visual e movimentação. A máscara de sinais em A introduz uma diferença modelada. Os mecanismos vêm de hipóteses da A2 e os dados disponíveis não fornecem comparação humana diretamente compatível. Contagens simuladas, respostas estruturadas do modelo e referência KLM não estimam adesão, ingestão, satisfação ou experiência da população. Foi possível verificar localmente a cadeia observação--ação--evento--desfecho. As execuções demonstram a cadeia de registro. Os modelos e limites diferem entre as rodadas, e o contexto interno da CLI não pode ser reconstituído integralmente. A repetição da ajuda em C4 é um ponto para investigação, e o piloto não valida a persona.
 
 \bibliographystyle{IEEEtran}
 \bibliography{referencias}

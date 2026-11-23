@@ -1,19 +1,26 @@
-\begin{table}[ht]\caption{Piloto com LLM: configuração e tarefa}\small
-\begin{tabularx}{\columnwidth}{@{}lYYYY@{}}\toprule
-Condição & S/N & Desc. & A méd. & H méd.\\\midrule
-Fixa/C2 & 7/7 & 0 & 9.43 & 0.00\\
-Fixa/C4 & 0/8 & 1 & 39.00 & 19.62\\
-Neutra/C2 & 1/1 & 0 & 8.00 & 0.00\\
-Neutra/C4 & 0/1 & 0 & 40.00 & 24.00\\
-\bottomrule\end{tabularx}\end{table}
-\subsection{Escopo e resultados do piloto}
-A coleta com LLM foi encerrada por disponibilidade de franquia e prazo: a meta anterior de 16 sessões foi cancelada, sem alteração de parâmetros ou tarefas. O enunciado exige o registro-piloto, sem fixar quantidade mínima. Foram preservadas nove sessões (oito na referência fixa e uma neutra), com 17 tentativas avaliadas: oito sucessos, oito insucessos por limite e uma tentativa desconhecida por falha técnica. Uma tarefa posterior não iniciada não integra o denominador. A análise abrange somente os arquivos persistidos; trabalho interrompido antes da gravação não foi reconstruído. Smoke e trajetórias dirigidas não foram agregados à amostra.
+\subsection{Interface revisada e exploração no navegador}
+Na versão 1.2, separamos a instrução, a navegação, o cartão do medicamento e a resposta. Reescrevemos a ajuda em frases curtas e tornamos explícito que C4 é uma tarefa de consulta. Um dos autores experimentou C4 no navegador e acionou \emph{Registrar que tomei} antes de responder. O verificador reprovou a tentativa porque o registro inicial foi alterado. Esse caso mostrou a importância de separar a resposta do botão que altera o registro. A tela de encerramento passou a informar os motivos observáveis de insucesso. Em uma verificação dirigida de C4, o navegador registrou sucesso em cinco ações, com duas entregas de ajuda. A experiência dos autores serve à revisão interna da interface.
 
-$S$ representa sucessos confirmados por tentativas iniciadas, com desconhecidos informados à parte. $A$ e $H$ são médias de ações executadas e entregas de ajuda, incluindo a trajetória parcial desconhecida. Nas oito tentativas C2, $R_e=0/8$ oportunidades; em C4, o denominador funcional foi zero, portanto $R_e$ é indefinido, não zero. A ausência de erros E1--E3 não implica sucesso: a tarefa pode terminar sem fornecer a resposta.
+\subsection{Piloto com a interface revisada}
+Conduzimos cinco tentativas exploratórias independentes na versão 1.2, variante B, com perfil fixo e semente 20261026. O GPT-6-Sol usou raciocínio médio e o limite normal do motor (40 ações ou 60 propostas). O GPT-5.6-Luna usou raciocínio baixo com até cinco chamadas. O Qwen3 4B Instruct, executado localmente com Ollama, teve limites de cinco chamadas em C4 e doze em C2. As três configurações retornaram escolhas estruturadas entre as ações permitidas. O E3 contém as requisições da aplicação, respostas e eventos. A CLI acrescenta contexto gerenciado que o adaptador não exporta.
 
-As oito tentativas C2 tiveram sucesso externo. As oito tentativas C4 conhecidas atingiram 40 ações sem conclusão satisfatória; a nona foi interrompida tecnicamente após 32 ações. Houve repetição de pedidos de ajuda. A configuração neutra também apresentou esse padrão; não há base para atribuí-lo aos mecanismos da persona. Cada decisão ocorre sem histórico conversacional automático; o contexto entre passos depende do estado externo. A retenção da ajuda e a política de escolha requerem investigação posterior, sem ajustes neste conjunto.
+\begin{table}[ht]
+\caption{Tentativas na versão 1.2, variante B}
+\small
+\begin{tabularx}{\columnwidth}{@{}lcYrrl@{}}\toprule
+Modelo & C & Desfecho & $A$ & $H$ & $R_e$\\\midrule
+Sol & C2 & Sucesso & 9 & 0 & 0/1\\
+Sol & C4 & Limite & 40 & 20 & ND\\
+Luna & C4 & Limite & 5 & 3 & ND\\
+Qwen3 & C2 & Limite & 12 & 0 & 1/11\\
+Qwen3 & C4 & Desistência & 3 & 2 & ND\\\bottomrule
+\end{tabularx}
+\end{table}
 
-Em C2, as médias de ações excederam a referência ideal: 9,43 na condição fixa e 8,00 na neutra, frente a 5 ou 6 no KLM. Em C4, 39,00 e 40,00 ações não são tempos nem trajetórias equivalentes à referência bem-sucedida de 4 ações. O KLM de especialista fornece 9,20--10,50~s em C2 e 6,55~s em C4; tempos do serviço e da CLI são custo computacional, não tempo humano modelado.
+Houve um sucesso em cinco tentativas, em C2 com Sol. Todos os desfechos puderam ser decididos pelo verificador. $A$ conta ações executadas e $H$ conta entregas de ajuda. $R_e$ divide marcas E1--E3 por oportunidades funcionais. ND indica denominador zero. A desistência em C4 gerou uma marca E4 por omissão da resposta, fora de $R_e$. Em C4, Sol abriu a Ajuda e voltou à tarefa vinte vezes, sem selecionar resposta. O padrão indica onde a interação parou. O conjunto de tentativas não permite atribuí-lo à ajuda ou ao modelo.
 
-A mediana das latências de decisões recebidas foi 3.95~s; os arquivos contêm 427 requisições persistidas. O adaptador Codex usou login ChatGPT, saída estruturada e modelo padrão da conta. O identificador efetivo do modelo não foi emitido. Os parâmetros do adaptador alternativo da Responses API não foram usados nesta coleta.
-A amostra é pequena, desigual e dependente dentro das sessões. Não foram realizados testes de significância ou alegações de superioridade entre condições. O piloto demonstra execução auditável, não validação da persona. Os prompts, observações da aplicação, seleções e latências constam do E3. A CLI adiciona contexto gerenciado não exportado pelo adaptador; o pacote não captura esse contexto interno integral e não permite controlar completamente o serviço. O vídeo E5 reproduz uma trajetória real de C2 registrada, identificada como reprodução, sem novas chamadas ao modelo.
+O caso bem-sucedido de C2 teve nove ações, frente a cinco ou seis da referência KLM. As tentativas C4 encerradas sem sucesso têm contagem de ações, mas não equivalem à trajetória ideal de quatro ações. Os tempos KLM descrevem operadores de uma trajetória de especialista. A interface revisada acrescenta operações manuais de seleção, e a latência do modelo mede processamento computacional.
+
+\subsection{Rodada anterior e vídeo}
+Na versão 1.0, foram registradas 17 tentativas: oito sucessos em C2, oito insucessos por limite em C4 e um desfecho desconhecido em C4 por falha técnica. A repetição da ajuda já aparecia nessa rodada. Mantivemos esse conjunto identificado no E3 e analisamos as versões separadamente. O vídeo E5 reproduz uma execução completa de C2 dessa primeira rodada, com ações e resultado verificados nos registros. As telas da revisão constam no caderno E1.
+

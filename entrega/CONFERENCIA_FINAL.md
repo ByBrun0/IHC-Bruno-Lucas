@@ -1,6 +1,6 @@
 # Conferência final da P3
 
-- Artigo IEEE: 3 páginas, dentro do limite de 8; E1 anexado separadamente (9 páginas), total do PDF principal: 12.
+- Artigo IEEE: 3 páginas, dentro do limite de 8; E1 anexado separadamente (7 páginas), total do PDF principal: 10.
 - Logs: 9 sessões persistidas e 17 tentativas, conferidas contra task_closed e action_executed. IDs e sequências de eventos únicos; seleções recebidas pertencem às opções das observações registradas.
 - Resultados: 8 sucessos, 8 insucessos, 1 desconhecido. Somente C2/C4 executadas. Oito testes locais passaram; sem novas chamadas ao LLM no fechamento.
 - Tarefas reservadas e entregas anteriores: hashes preservados.

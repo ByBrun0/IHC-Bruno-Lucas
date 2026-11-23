@@ -22,7 +22,6 @@ Encerramento\newline (convenção) & Ações de encerrar & Controle explícito; 
 
 Cabeçalhos, títulos e ações gerais aparecem em linguagem pública. Em R, a confirmação em A se perde após a próxima ação; a informação continua acessível em U/D. Nenhum signo carrega o identificador interno, o vetor de estados ou a correção esperada.
 
-\clearpage
 \section{CTT e referência analítica}\label{ap:ctt}
 A: abstrata (raiz e grupos); U: operação mental / usuário; I: interação; S: processamento ou feedback do sistema. Usa-se $\gg$ para habilitar, $[\ ]\gg$ para habilitar com informação, $[\ ]$ para escolha e $|=|$ para ordem independente. $|>$ suspende, executa ajuda e retoma a origem; $[>$ desativa por desistência, teto ou falha. O processamento ocorre após a ação, sem inferência de leitura.
 
@@ -62,7 +61,6 @@ R & Espera bloqueante; fora da referência sem medida & --\\\bottomrule
 
 Fonte única de tempos: Card et al., pp. 397--400. Premissa H: mão já no dispositivo; um M antes de iniciar o método e um antes da escolha da resposta. Acionamentos previstos em sequências rotineiras compartilham a preparação. H/H: $M(PK)^4M(PK)^2=10{,}50$~s. U/H: $M(PK)^3M(PK)^2=9{,}20$~s. Referência C4: $M(PK)^4=6{,}55$~s após preparação de um percurso já conhecido. Para rastrear esforço de navegação, as bases são 6/5 ações em C2 e 4 em C4. O KLM não serve para estimar erros nem é fornecido ao agente.
 
-\clearpage
 \section{Diálogo da persona e estados}\label{ap:molic}
 \begin{center}
 \begin{tikzpicture}[b/.style={draw,rounded corners,minimum width=13mm,minimum height=8mm,font=\small},f/.style={-{Latex},thin},e/.style={font=\scriptsize,align=center,fill=white,inner sep=1pt}]
@@ -106,7 +104,6 @@ F & Término. Concluir ou desistir; desativar por regra & Fechamento publicado a
 
 Em I/R/H/U/D/E, ajuda é acesso ubíquo. Desistir está nas cenas abertas e Concluir nas cenas de conteúdo. Estados e pré-condições vêm da tabela e das regras. Cenas geram exibição; falas \textit{u:} geram seleção/execução; \textit{d:} geram conteúdo observável; processos de registro e correção geram evento próprio; aviso E e retorno explicitam recuperação.
 
-\clearpage
 \section{Rupturas e justificativas do design}\label{ap:rupturas}
 PP: fala preventiva; PA: bloqueio ativo; AL: alerta; RA: recuperação apoiada; CE: captura de erro. A relação cobre os grupos de operação das HTAs; os números de folhas estão no CTT. Usamos E1--E4 conforme a A2. E5 depende de divergência verificável entre proposta e execução, ausente no caminho atômico do protótipo.
 
@@ -136,7 +133,6 @@ Como corrigir & Correção direta ou com revisão de alvo; preservar controle & 
 \end{tabularx}
 \end{center}
 
-\clearpage
 \section{Ajuda e telas do protótipo}\label{ap:ajuda}
 A camada local é o cartão já previsto na A2. Seus tópicos são informativo (o que significa cada estado), descritivo (o que faz cada sinal compacto), procedimental (como registrar ou abrir correção), interpretativo (o que um registro permite dizer) e de escolha (fechar ou registrar). A camada ampliada cobre dúvida navegacional (como confirmar o horário) e histórica (o que significa a correção). Não há recomendação clínica, ajuda adaptativa ou sugestão de alternativa para cenário específico.
 
@@ -148,5 +144,5 @@ A camada local é o cartão já previsto na A2. Seus tópicos são informativo (
 
 \campo{Esboços navegáveis} A tela de rotinas apresenta ocorrências por horário. Histórico e Último ficam nos mesmos pontos em A/B. R dá feedback imediato; D separa estado, lembrete e auditoria. E mostra o alvo e permite cancelar. J aparece somente por pedido. A lista de respostas fica nas cenas de conteúdo onde o protocolo exige classificação. São gerados JSONs de teste apenas para C2/C4.
 
-\IfFileExists{telas.png}{\newpage\begin{center}\includegraphics[width=\columnwidth]{telas.png}\\\small Lembrete e cartão de ajuda em C4, variante B.\end{center}}{}
+\IfFileExists{telas.png}{\begin{center}\includegraphics[width=\columnwidth]{telas.png}\\\small Lembrete e cartão de ajuda em C4, variante B.\end{center}}{}
 

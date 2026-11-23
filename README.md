@@ -28,7 +28,7 @@ Na primeira rodada, coletamos 9 sessões com 17 tentativas. Houve 8 sucessos, 8 
 
 Esta versão apresenta a revisão visual do aplicativo. As instruções, os atalhos de navegação, o cartão do medicamento e o campo de resposta aparecem em áreas próprias. Para abrir a revisão, use as instruções de execução acima.
 
-A pasta [revisao-visual](revisao-visual/) contém as telas, o complemento de design e o vídeo de uma verificação dirigida no navegador. Os dados da versão original e da revisão estão no pacote E3, identificados por versão. O vídeo E5 mostra uma execução da versão original.
+A pasta [revisao-visual](revisao-visual/) contém as telas, o complemento de design e o vídeo de uma verificação dirigida no navegador. Os dados da versão original e da revisão estão no pacote E3, identificados por versão. O vídeo E5 reproduz a tentativa C2 bem-sucedida na versão 1.2, com nove ações escolhidas pelo GPT-6-Sol.
 
 A revisão 1.2 simplifica a ajuda e a instrução de C4. Fizemos uma tentativa curta com Luna e limite de cinco chamadas. O agente atingiu o limite sem responder. Os dados estão em revisao-visual. Para repetir essa tentativa, use node src/piloto-curto.mjs com o Codex CLI autenticado. Cada execução faz até cinco chamadas e usa a franquia da conta.
 

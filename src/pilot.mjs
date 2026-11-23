@@ -13,7 +13,10 @@ const smoke=process.argv.includes('--smoke');
 const prompt=(await readFile(new URL('./prompt.txt',import.meta.url),'utf8')).trim();
 const tasks=['C2','C4'];
 const sequences=[[tasks,['A','B']],[tasks,['B','A']],[[...tasks].reverse(),['A','B']],[[...tasks].reverse(),['B','A']]];
-const runId = new Date().toISOString().replace(/[:.]/g, '-') + '-' + randomUUID().slice(0,8);
+const resumeIndex = process.argv.indexOf('--resume');
+const resumeRun = resumeIndex >= 0 ? process.argv[resumeIndex + 1] : null;
+if (resumeRun && !/^[a-zA-Z0-9-]+$/.test(resumeRun)) throw new Error('Identificador de rodada inválido');
+const runId = resumeRun || new Date().toISOString().replace(/[:.]/g, '-') + '-' + randomUUID().slice(0,8);
 const output = new URL('../results/' + type + '/' + runId + '/', import.meta.url);
 await mkdir(output,{recursive:true});
 
@@ -63,11 +66,20 @@ function localAction(task, turn, observation) {
 }
 
 const modes=type==='technical'||smoke?['neutral']:['fixed','neutral'];
-const manifest={type,version:VERSION,created:new Date().toISOString(),model:type==='technical'?null:model,smoke,sessions:[]};
+const manifest = resumeRun
+  ? JSON.parse(await readFile(new URL('manifest.json', output), 'utf8'))
+  : {type,version:VERSION,created:new Date().toISOString(),model:type==='technical'?null:model,smoke,sessions:[]};
+if (manifest.type !== type || manifest.smoke !== smoke) throw new Error('Modo diferente da rodada original');
+if (resumeRun) {
+  manifest.resumptions ??= [];
+  manifest.resumptions.push({ at: new Date().toISOString(), saved_sessions: manifest.sessions.length });
+}
 let apiStopped=false;
 for (const mode of modes) {
   for (let i=0;i<(smoke?1:type==='technical'?4:8);i++) {
     if (apiStopped) break;
+    const plannedIndex = modes.indexOf(mode) * (smoke ? 1 : type === 'technical' ? 4 : 8) + i;
+    if (plannedIndex < manifest.sessions.length) continue;
     const [order,variants]=sequences[i%4];
     const id=type+'-'+randomUUID();
     const session=createSession({id,mode,seed:20261026+i,origin:type==='technical'?'technical':'synthetic_llm'});
@@ -101,6 +113,8 @@ for (const mode of modes) {
       id,mode,results,events:session.events,mac:macEvents(session.events),requests,
     },null,2));
     manifest.sessions.push({file,mode,order,variants,results});
+    manifest.interrupted=apiStopped;
+    await writeFile(new URL('manifest.json',output),JSON.stringify(manifest,null,2));
     if (apiStopped) break;
   }
 }

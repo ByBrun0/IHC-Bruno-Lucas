@@ -1,0 +1,9 @@
+# Dados do piloto encerrado
+
+O manifesto original foi preservado em manifest_original.json. manifest.json acrescenta o encerramento por recursos, sem modificar resultados. Somente arquivos persistidos entram nos cálculos. A meta anterior de 16 sessões não foi atingida e não constitui exigência numérica do enunciado. A coleta foi interrompida por franquia e prazo, sem ajuste dos mecanismos. Não se reconstruiu trabalho em memória que não chegou ao disco.
+
+São 9 sessões (8 fixas, 1 neutra), 17 tentativas: 8 sucessos, 8 insucessos pelo limite e 1 desconhecida por falha técnica. O desconhecido não foi convertido em falha funcional. Uma segunda tarefa não iniciada não compõe o denominador. As médias incluem a trajetória parcial da tentativa desconhecida, explicitada no artigo. As sessões de smoke e verificação dirigida são conjuntos separados; não integram esses números.
+
+requests[].request.input guarda o prompt e a observação fornecidos pela aplicação; schema guarda o contrato. output_text/action guardam a seleção recebida. calls contém status, uso disponível e latência. Não se guardam credenciais. A CLI acrescenta contexto gerenciado próprio, não exportado pelo adaptador: estes arquivos não são uma captura do contexto interno completo do serviço. O modelo efetivo não foi identificado na saída. As chamadas usaram login ChatGPT, e não a Responses API; temperatura, raciocínio none e limite de 256 tokens do adaptador alternativo da API não descrevem esta coleta.
+
+O controle neutro possui apenas uma sessão: não permite contraste estatístico confiável. C4 repetiu acessos à ajuda e atingiu o limite sem resposta final. Isso é resultado observado, não evidência de dificuldade humana ou de efeito causal de M1–M4. O KLM é referência ideal de especialista, não previsão da latência computacional.

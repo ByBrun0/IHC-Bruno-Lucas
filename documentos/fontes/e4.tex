@@ -1,0 +1,61 @@
+\documentclass[conference,a4paper]{IEEEtran}
+\input{preambulo}
+\title{Implementação instrumentada de um UX-Agent para lembretes e registros de tomada de medicamentos}
+\begin{document}
+\maketitle
+\begin{abstract}
+Este trabalho apresenta uma aplicação web local para a execução de tarefas fictícias de lembrete e registro de tomada por um agente proxy baseado em modelo de linguagem. O sistema compartilha a representação pública de tela e ações entre a interface e a observação textual. A execução obedece às transições da conversa e o verificador externo avalia o desfecho. Foram verificadas a instrumentação, a ajuda sob demanda e a ausência dos campos privados conhecidos na observação, por meio de ações dirigidas nas tarefas de calibração. O piloto com LLM registrou 17 tentativas: oito sucessos, oito insucessos e um desfecho desconhecido. O conjunto reduzido permite avaliar o funcionamento, sem validar a persona ou o contraste entre condições. A comparação com KLM distingue contagem de ações, referência de especialista e tempo computacional.
+\end{abstract}
+\begin{IEEEkeywords}
+UX-Agent, instrumentação, comunicabilidade, KLM, dados sintéticos.
+\end{IEEEkeywords}
+\section{Introdução}
+Como produzir registros auditáveis de tarefas sem fornecer ao agente informação que a persona não teria? A P3 transforma um design instrumentado em aplicação e registra a cadeia entre ação, resposta pública e avaliação externa~\cite{p3}. O aplicativo não coleta dados de saúde e usa artefatos fictícios.
+
+\section{Modelagem herdada e decisões}
+A2 definiu Helena, personagem idosa que lê português, tem pouca experiência em aplicativos de medicamentos e apoio familiar, C2 (comparar ocorrências) e C4 (interpretar pendência com ajuda)~\cite{a2}. V5/V8 e suas HTAs foram preservadas na reserva. Os métodos das quatro tarefas, a hierarquia CTT, a conversa MoLIC, a matriz de rupturas e a ajuda integram E1; apenas C2/C4 foram instrumentadas como cenários executáveis para esta fase.
+
+\begin{table}[ht]
+\caption{Decisões de implementação}\small
+\begin{tabularx}{\columnwidth}{@{}YYP{.19\columnwidth}@{}}\toprule
+Decisão & Justificativa & Status\\\midrule
+Renderizador compartilhado & A mesma fonte de signos alimenta tela e observação & Princípio de design\\
+Ações com IDs opacos & Reduz metadados internos no canal de decisão & Princípio de design\\
+A/B preservam controles & Comparar rótulos e persistência de feedback no mesmo desenho & Hipótese operacional\\
+Cartão sob demanda & Registrar entrega, manter previsibilidade e permitir retorno & Princípio de design\\
+Perfis com parâmetros externos & Representar hipóteses replicáveis e ablação técnica & Hipótese operacional\\\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Arquitetura e acoplamento}
+O motor lê um conjunto versionado de transições inspiradas na MoLIC~\cite{molic}\cite[pp. 9--31]{guiamolic}. O renderizador produz somente título, linhas públicas e controles. O tradutor associa cada controle a um ID opaco de uso único e fornece apenas as ações autorizadas pelo estado atual. O adaptador do modelo prepara uma chamada com uma resposta estruturada de seleção de ação. O executor verifica a combinação de ação e observação. IDs de banco, modelos de tarefas, ordenação analítica, desfecho correto e critérios não entram na requisição. A interface local fica restrita ao dispositivo e mostra a auditoria após o encerramento.
+
+\campo{Mecanismos} M1 controla omissão de sinais compactos por visita quando desconhecidos. M2 mantém blocos já exibidos, M3 retém marcos e M4 guarda as associações do cartão solicitado. Os esquemas de referência usam $q=0{,}35$, $k=a=1$ e $l=5$. O amostrador usa grades discretas da A2 e semente por sessão. O controle neutro desliga a omissão e a retenção limitada e desativa a aprendizagem cumulativa. A ajuda permanece disponível. Entre as duas tentativas da sessão, M2/M3 reiniciam e M4 permanece. Não se introduz atraso comportamental sem sustentação empírica. Tempos registrados são da execução.
+
+\campo{Verificador} Usa estados dos relatos, consulta às ocorrências, resposta selecionada e entrega de ajuda quando exigida. Desistência é insucesso; falha técnica que impede decidir é desconhecida. O encerramento acontece mesmo com resposta incompleta. O sucesso não usa afirmação textual do agente.
+
+\section{Instrumentação e critérios}
+Cada evento tem sessão, sequência, tempo UTC, tipo e origem; quando aplicável, tarefa, variante, posição, cena, fala, resposta e dados técnicos. A ajuda registra pedido, entrega, camada e retorno. Os padrões operacionais MAC incluem pedir ajuda, cancelar a confirmação, repetir navegação, desistir e concluir sem sucesso; são candidatos à inspeção~\cite[pp. 31--38]{mac}. O pacote E3 inclui a trilha e o dicionário. O E3 guarda os prompts e observações fornecidos pela aplicação à CLI, as respostas disponíveis e as latências, sem credenciais; o contexto interno gerenciado pelo serviço não é exportado.
+
+\section{Verificação e piloto}
+A verificação técnica executou quatro sessões de duas tentativas com ações dirigidas, cobrindo C2/C4, A/B e as duas ordens. Oito verificações automatizadas exercitaram rota por U/D, erro recuperado, obrigatório de ajuda, reinício de filas, aprendizagem, rejeição e falha, cancelamento e reserva. Nas oito tentativas dirigidas, houve oito fechamentos com sucesso externo. Esses caminhos foram escolhidos para conferir a determinística do instrumento e não estimam taxa de sucesso de nenhum público.
+
+\begin{table}[ht]
+\caption{Trajetórias dirigidas e referência ideal}\small
+\begin{tabularx}{\columnwidth}{@{}lYYYY@{}}\toprule
+Tarefa & Sucesso & Erros / op. & Ações / tentativa & Ajuda / tentativa\\\midrule
+C2 pela rota H/H & 4/4 & 0/4 & 6 & 0\\
+C4 & 4/4 & 0/4 & 4 & 1\\\bottomrule
+\end{tabularx}
+\end{table}
+
+As contagens são compatíveis com H/H de C2 (6 ações, 10,50~s) e C4 (4 ações, 6,55~s), referências KLM de especialista com mouse~\cite[pp. 397--400]{card}. U/H, rota alternativa de C2, usa 5 ações e 9,20~s na referência. O KLM não foi comparado a latências do LLM. 
+\input{resultados_p3}
+
+\section{Ameaças à validade e conclusão}
+A transcrição textual preserva o conteúdo sem replicar leitura visual e movimentação. A máscara de sinais em A introduz uma diferença modelada. Os mecanismos vêm de hipóteses da A2 e os dados disponíveis não fornecem comparação humana diretamente compatível. Contagens simuladas, respostas estruturadas do modelo e referência KLM não estimam adesão, ingestão, satisfação ou experiência da população. Foi possível verificar localmente a cadeia observação--ação--evento--desfecho. A execução com LLM confirmou a cadeia de registro, mas a amostra desbalanceada e o contexto gerenciado pela CLI limitam a reprodução e não autorizam afirmações de alinhamento humano.
+
+\bibliographystyle{IEEEtran}
+\bibliography{referencias}
+\end{document}
+

@@ -1,0 +1,71 @@
+\section{Do modelo ao design}
+A A2 delimitou o perfil de pessoas com pelo menos 60 anos, pouca familiaridade com aplicativos de medicamentos e apoio familiar. Fixou C2 e C4 para calibração e V5 e V8 para validação reservada~\cite{a2}. Esta atividade especifica como a interface comunica seus estados, oferece ajuda e gera registros sob a fronteira de informação do enunciado~\cite{a3}. O objeto é a interação com relatos fictícios. Apresentar um lembrete, registrar um relato e confirmar ingestão são acontecimentos distintos.
+
+\begin{table}[ht]
+\caption{Retomada do recorte $T\times U\times C\times I\times G$}\label{tab:tucig}
+\small\begin{tabularx}{\columnwidth}{@{}lYY@{}}\toprule
+Eixo & A2 & Decisão na A3\\\midrule
+T & Aplicativo móvel em duas variantes & Protótipo web responsivo com fonte única de signos.\\
+U & Helena, comparador e antiusuário & Mantidos. Familiar pode organizar a rotina, com cadastro pré-carregado.\\
+C & Casa, português e apoio familiar & Ambiente fictício, relógio de cenário, ajuda sob demanda.\\
+I & Relato, consulta e classificação & Mostrar item/data/hora e distinguir auditoria do estado atual.\\
+G & Falta dado humano comparável & Usar evidência de design e verificar o instrumento; comparação empírica pendente.\\\bottomrule
+\end{tabularx}
+\end{table}
+
+Helena é a usuária direta. O familiar é papel de contexto e fornece a rotina inicial fora da interação avaliada. O comparador humano tem contexto semelhante e maior familiaridade digital. A pessoa cuja rotina é administrada integralmente por terceiros permanece fora do recorte. A modalidade visual por toque e a leitura textual do agente compartilham vocabulário; coordenação motora e leitura de ícones não são equivalentes. A idade delimita o perfil, sem presunção de déficit cognitivo.
+
+\campo{Metas} Eficácia: completar os critérios externos e reportar sucesso por tentativas iniciadas. Eficiência: contar ações por tarefa e comparar percurso com referências analíticas. Segurança: zero alterações fora da intenção em percursos de referência e registrar cada E1. Utilidade: apoiar relato, conferência e correção. Aprendizagem e memorização: registrar reconsulta, busca de ajuda e reutilização dentro da sessão. Como metas de experiência, Helena deve sentir controle sobre o que relata e conseguir retomar a tarefa após consultar ajuda. Essas metas orientam o desenho e dependem de avaliação humana~\cite[cap. 2]{preece}.
+
+\campo{Restrições} Critérios congelados, sucesso externo, métricas mínimas e ausência de coleta nesta etapa. Uma futura comparação humana deverá coincidir em objetivos, dados visíveis, ações essenciais, ajuda e formas de bloquear ou recuperar erros. As fontes da A2 não estabelecem comparador compatível. Cores e organização responsiva são livres até que uma comparação imponha restrições. Em A/B, posições, funções e alvos são equivalentes por especificação. A muda rótulos e duração da confirmação em conjunto; B explicita as ações e mantém confirmação.
+
+\section{Metamensagem e modelo conceitual}
+\campo{Para Helena} Entendi que você organiza sua rotina com apoio e quer entender o que ficou anotado. Este aplicativo mostra cada item em seu horário, deixa você registrar e conferir seu relato e oferece ajuda quando você pedir. Se precisar desfazer um registro, você pode rever a escolha antes de confirmar. O histórico informa o que foi registrado e preserva a existência de uma correção~\cite[cap. 7]{barbosa}.
+
+\begin{table}[ht]
+\caption{Espaço de design para dois receptores}\label{tab:receptores}
+\small\begin{tabularx}{\columnwidth}{@{}P{.18\columnwidth}YYY@{}}\toprule
+Elemento & Persona & Agente & Diferença / status\\\midrule
+Emissor & Preposto através da tela & Mesmas falas públicas & Projeção textual, H\\
+Receptor & Helena lê e toca & Modelo seleciona opção & Canal sem toque, H\\
+Contexto & Item, dia, hora e estado visíveis & Iguais quando exibidos & IDs opacos de ação, H\\
+Código & Português, símbolos e estados & Texto e glifo apresentado & Glifo textual, H\\
+Canal & Tela responsiva & Observação filtrada por turno & M1 pode omitir, H\\
+Mensagem & Entender registros e decidir & Mesma instrução e conteúdo & Histórico limitado a sinais vistos, H\\\bottomrule
+\end{tabularx}
+\end{table}
+
+\campo{Modelo conceitual} Um registro de rotina contém ocorrências identificadas por item, data e horário. Cada ocorrência pode ter um relato vigente e um histórico de correções. A metáfora de caderno ajuda a localizar e conferir entradas. O limite dessa metáfora é que corrigir mantém uma trilha, em vez de apagar o passado. C2 privilegia navegar e comparar; C4 combina navegação e instrução de classificação; V5 usa instrução direta para relatar e navegação para conferir; V8 usa navegação e classificação. O desenho conceitual fixa o que cada operação significa. O desenho físico especifica sua posição, rótulo, acessibilidade e duração de feedback~\cite[p. 199]{benyon}\cite[cap. 2]{preece}.
+
+\section{Objetivos, cenários e signos}
+\begin{table}[ht]
+\caption{Encadeamento de cenários e objetivos finais}\label{tab:mapa}
+\small\begin{tabularx}{\columnwidth}{@{}lYY@{}}\toprule
+Tarefa & Problema $\rightarrow$ cenário de interação & Objetivo final\\\midrule
+C2 & Dúvida sobre dois horários $\rightarrow$ recupera e compara relatos, preservando entradas & F1 Conferir rotina do dia\\
+C4 & Sentido de pendência $\rightarrow$ pede explicação, volta e comunica a interpretação & F2 Interpretar registro\\
+V5 & Dois horários do mesmo item $\rightarrow$ distingue e relata o pretendido; verifica as duas ocorrências & F3 Relatar com precisão\\
+V8 & Relato desfeito $\rightarrow$ consulta explicação e compara histórico e estado vigente & F2 Interpretar registro\\\bottomrule
+\end{tabularx}
+\end{table}
+
+Os objetivos finais pertencem a Helena, com entidades rotina (F1), ocorrência (F2) e relato (F3). Seus objetivos instrumentais diretos são identificar a ocorrência (F1--F3), distinguir estado vigente e auditoria (F2), conferir o resultado (F3). Consultar uma explicação é instrumental indireto para recordar os significados, apoiando F1--F3. O cuidador organiza a rotina antes da sessão, com objetivo de definir horários e disponibilizá-los à persona. Os cenários descrevem a conversa sem fixar componentes visuais.
+
+\campo{Cena principal em C2} Na opção 1, Helena pede os registros de hoje; o aplicativo oferece as ocorrências. Ela recupera Alfa, volta à lista e recupera Beta. Na opção 2, primeiro pede o último relato, confere que corresponde a Beta e recupera Alfa por data. Nos dois casos, o sistema mostra dados identificáveis e recebe a comparação. A segunda opção reduz navegação se o último relato corresponder; a primeira continua disponível sem essa condição.
+
+\campo{Situação crítica em V5} Helena distingue os horários, relata às 18:00 e recupera as duas ocorrências após o registro. Sequência documental A: primeiro confere o relato novo, depois o horário das 08:00. Sequência B: depois do relato, confere as 08:00 antes do último registro. Perguntas levantadas: o sistema identifica inequivocamente o horário consultado? O relato das 18:00 continua disponível mesmo após consultar as 08:00? Essas perguntas documentam a tarefa congelada. V5 e V8 não contribuíram para seleção de alternativas ou testes do protótipo.
+
+O esquema de signos do Apêndice~\ref{ap:signos} liga expressão pública, transcrição textual e evento. IDs de banco, estado oculto, critérios e campos do avaliador ficam fora do canal. O estado da tarefa pertence ao executor. Uma mensagem pode ser omitida pelo mecanismo M1 apenas quando o sinal compacto de uma ação ainda não foi aprendido. M2 e M3 guardam sinais públicos já exibidos. M4 guarda apenas associações do cartão solicitado. O conjunto é uma hipótese de modelagem da A2.
+
+\section{Tarefas, conversa e ajuda}
+O Apêndice~\ref{ap:ctt} detalha a tradução das quatro HTAs, os métodos de C2 e a tabela única de tempos. CTT explicita precedência, escolha, independência, interrupção e retorno com os operadores de Paternò~\cite[pp. 489--492]{paterno}. O KLM usa a referência de Card et al.~\cite[pp. 397--400]{card}. Em C2, o percurso duplo pelo histórico tem seis acionamentos e referência de 10,50~s; o percurso com U para Beta e D para Alfa tem cinco e 9,20~s. Ambos partem de I. Os números descrevem um método ideal de especialista com mouse, sem erros e sem latência. Seu uso para comparar percursos do protótipo é H; não mede tempo de toque de Helena ou tempo do agente.
+
+A MoLIC (Apêndice~\ref{ap:molic}) descreve as falas da persona e do preposto. A máquina de estados operacionaliza os diálogos, condições e retornos~\cite{molic}\cite[pp. 9--31]{guiamolic}\cite[cap. 16]{dix}. Uma fala da usuária em condição válida vira uma opção; a tela após execução comunica o resultado público. Cada cena, transição, entrega de ajuda e recuperação pode ser auditada. A ação Concluir dispara o avaliador externo. As regras de prevenção e recuperação e as assinaturas de comunicabilidade são detalhadas no Apêndice~\ref{ap:rupturas}~\cite[cap. 7]{barbosa}\cite[pp. 31--38]{mac}.
+
+\campo{Ajuda} A primeira camada explica sinais e estados em um cartão. A camada expandida oferece explicação sobre identidade da ocorrência e auditoria. Ambas são solicitadas; nenhuma entrega a resposta do cenário. Símbolos e termos do cartão permanecem iguais para os dois canais e a ajuda retorna à origem. O Apêndice~\ref{ap:ajuda} descreve conteúdo, disponibilidade, precisão e completude, consistência, robustez, flexibilidade e discrição~\cite[p. 397]{dix}.
+
+\section{Acoplamento, verificação e congelamento}
+O protótipo navegável tem as duas variantes e os fluxos executáveis C2/C4. A mesma função produz títulos, conteúdo e controles para tela e observação, antes do filtro M1. Cada turno gera identificadores opacos que não codificam ocorrência ou regra. Um controle ausente não aparece como ação disponível. As memórias derivam exclusivamente de signos públicos, com limite por fila. O cliente nunca recebe o gabarito durante a tentativa.
+
+A verificação técnica usou ações dirigidas com C2/C4. Exercitou rota por histórico e por último relato, abrir e fechar ajuda, corrigir uma resposta, rejeitar ação fora da lista e concluir por avaliação do sistema. Conferiu que a observação não continha os campos privados conhecidos e que a ajuda somente era exibida após pedido. Isso verifica o instrumento. Não equivale a teste de usabilidade humano ou piloto com LLM. Mapas, signos, regras, ajuda, estados e contratos recebem a versão 1.0.0; congele a versão usada antes de rodar o piloto. Mudança que afete a interface após início da calibração exige nova versão e nova calibração. O uso do agente permanece exploratório.
+

@@ -1,0 +1,19 @@
+\begin{table}[ht]\caption{Piloto com LLM: configuração e tarefa}\small
+\begin{tabularx}{\columnwidth}{@{}lYYYY@{}}\toprule
+Condição & S/N & Desc. & A méd. & H méd.\\\midrule
+Fixa/C2 & 7/7 & 0 & 9.43 & 0.00\\
+Fixa/C4 & 0/8 & 1 & 39.00 & 19.62\\
+Neutra/C2 & 1/1 & 0 & 8.00 & 0.00\\
+Neutra/C4 & 0/1 & 0 & 40.00 & 24.00\\
+\bottomrule\end{tabularx}\end{table}
+\subsection{Escopo e resultados do piloto}
+A coleta com LLM foi encerrada por disponibilidade de franquia e prazo: a meta anterior de 16 sessões foi cancelada, sem alteração de parâmetros ou tarefas. O enunciado exige o registro-piloto, sem fixar quantidade mínima. Foram preservadas nove sessões (oito na referência fixa e uma neutra), com 17 tentativas avaliadas: oito sucessos, oito insucessos por limite e uma tentativa desconhecida por falha técnica. Uma tarefa posterior não iniciada não integra o denominador. A análise abrange somente os arquivos persistidos; trabalho interrompido antes da gravação não foi reconstruído. Smoke e trajetórias dirigidas não foram agregados à amostra.
+
+$S$ representa sucessos confirmados por tentativas iniciadas, com desconhecidos informados à parte. $A$ e $H$ são médias de ações executadas e entregas de ajuda, incluindo a trajetória parcial desconhecida. Nas oito tentativas C2, $R_e=0/8$ oportunidades; em C4, o denominador funcional foi zero, portanto $R_e$ é indefinido, não zero. A ausência de erros E1--E3 não implica sucesso: a tarefa pode terminar sem fornecer a resposta.
+
+As oito tentativas C2 tiveram sucesso externo. As oito tentativas C4 conhecidas atingiram 40 ações sem conclusão satisfatória; a nona foi interrompida tecnicamente após 32 ações. Houve repetição de pedidos de ajuda. A configuração neutra também apresentou esse padrão; não há base para atribuí-lo aos mecanismos da persona. Cada decisão ocorre sem histórico conversacional automático; o contexto entre passos depende do estado externo. A retenção da ajuda e a política de escolha requerem investigação posterior, sem ajustes neste conjunto.
+
+Em C2, as médias de ações excederam a referência ideal: 9,43 na condição fixa e 8,00 na neutra, frente a 5 ou 6 no KLM. Em C4, 39,00 e 40,00 ações não são tempos nem trajetórias equivalentes à referência bem-sucedida de 4 ações. O KLM de especialista fornece 9,20--10,50~s em C2 e 6,55~s em C4; tempos do serviço e da CLI são custo computacional, não tempo humano modelado.
+
+A mediana das latências de decisões recebidas foi 3.95~s; os arquivos contêm 427 requisições persistidas. O adaptador Codex usou login ChatGPT, saída estruturada e modelo padrão da conta. O identificador efetivo do modelo não foi emitido. Os parâmetros do adaptador alternativo da Responses API não foram usados nesta coleta.
+A amostra é pequena, desigual e dependente dentro das sessões. Não foram realizados testes de significância ou alegações de superioridade entre condições. O piloto demonstra execução auditável, não validação da persona. Os prompts, observações da aplicação, seleções e latências constam do E3. A CLI adiciona contexto gerenciado não exportado pelo adaptador; o pacote não captura esse contexto interno integral e não permite controlar completamente o serviço. O vídeo E5 reproduz uma trajetória real de C2 registrada, identificada como reprodução, sem novas chamadas ao modelo.

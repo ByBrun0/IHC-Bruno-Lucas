@@ -1,6 +1,6 @@
 # Dicionário de eventos da P3
 
-Cada sessão é um arquivo JSON. `manifest.json` identifica a origem, versão, ordem, variantes e resultados por arquivo. `events` é a trilha ordenada; `mac` guarda apenas padrões operacionais; `requests` contém os corpos efetivamente montados para envio, respostas disponíveis e latências quando o modo é API. Em modo técnico a lista de requisições permanece vazia.
+Cada sessão é um arquivo JSON. `manifest.json` identifica a origem, versão, ordem, variantes e resultados por arquivo. `events` é a trilha ordenada; `mac` guarda apenas padrões operacionais; `requests` contém os corpos efetivamente montados para envio, respostas disponíveis e latências nos modos API e Codex. Em modo técnico a lista de requisições permanece vazia.
 
 | Campos | Semântica |
 |---|---|
@@ -22,3 +22,7 @@ Eventos de ciclo: session_started, task_started, screen_viewed, observation_emit
 - **H** = pedidos e entregas por tentativas iniciadas, com estratificação por camada, tarefa e variante. Em C4, o primeiro acesso é exigido pela tarefa. Camadas adicionais e pedidos em C2 são opcionais.
 - Denominador zero: indefinido. Dados perdidos ou falha técnica que impeça verificar o desfecho: desconhecido. Duplicatas idênticas do mesmo ID são uma unidade de registro.
 
+
+## Particularidades do Codex
+
+request.input é o texto fornecido pela aplicação à CLI, incluindo prompt e observação; request.schema é o contrato da seleção. calls[].status é o código de saída do processo (0 indica conclusão), diferentemente do status HTTP na API. output_text e action guardam a resposta disponível. O contexto interno gerenciado pelo Codex não é exportado pelo adaptador. usage contém as contagens que a CLI disponibilizou; o identificador efetivo do modelo não foi emitido.

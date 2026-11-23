@@ -1,0 +1,19 @@
+{
+  "sessions": 9,
+  "attempts": 17,
+  "status": {
+    "success": 8,
+    "failure": 8,
+    "unknown": 1
+  },
+  "saved_requests": 427,
+  "proposals": {
+    "action_proposed": 426
+  },
+  "help_layers": {
+    "local": 173,
+    "expandida": 8
+  },
+  "latency_median_seconds": 3.946,
+  "scope": "Somente arquivos persistidos; nenhuma nova chamada ao LLM neste fechamento."
+}

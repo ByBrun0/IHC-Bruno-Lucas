@@ -23,3 +23,9 @@ Usamos o Codex CLI com login do ChatGPT. Para repetir, autentique a CLI, confira
 O piloto usou as tarefas C2 e C4. As sementes previstas são 20261026 a 20261033 por configuração. O perfil fixo usa q=0,35, k=1, a=1 e l=5. A opção neutra de comparação roda com os mecanismos desativados e mantém a ajuda disponível. O comando de piloto inclui os dois modos. É possível indicar o modelo com `UXAGENT_MODEL`. Os novos registros ficam em `results/` e os campos estão descritos no [dicionário de eventos](DICIONARIO_EVENTOS.md).
 
 Encerramos a coleta após 9 sessões, com 17 tentativas. Houve 8 sucessos, 8 insucessos e um desfecho desconhecido por falha técnica. Como só uma sessão foi neutra, usamos os dados para discutir o funcionamento do protótipo.
+
+## Interface 1.1
+
+Esta versão apresenta a revisão visual do aplicativo. As instruções, os atalhos de navegação, o cartão do medicamento e o campo de resposta aparecem em áreas próprias. Para abrir a revisão, use as instruções de execução acima.
+
+A pasta [revisao-visual](revisao-visual/) contém as telas, o complemento de design e o vídeo de uma verificação dirigida no navegador. Os dados e o vídeo em entrega/ correspondem ao piloto da interface anterior, preservado na branch main.

@@ -1,7 +1,45 @@
 <!doctype html>
-<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Registro de rotina</title><link rel="stylesheet" href="/style.css"><script type="module" src="/ui.mjs"></script></head>
-<body><main><header><p class="context">Ambiente de teste · dados fictícios</p><h1>Registro de rotina</h1></header>
-<form id="setup"><label>Tarefa<select name="task"><option value="C2">C2 · Comparar registros</option><option value="C4">C4 · Interpretar um estado</option></select></label><label>Variante<select name="variant"><option value="A">A</option><option value="B">B</option></select></label><button>Iniciar tentativa</button></form>
-<p id="error" role="alert"></p>
-<section id="attempt" hidden><p id="instruction"></p><h2 id="heading" tabindex="-1"></h2><ul id="content"></ul><div id="actions"></div><details id="audit" hidden><summary>Registro da tentativa</summary><pre id="events"></pre></details></section>
-</main></body></html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Minha medicação</title>
+  <link rel="stylesheet" href="/style.css">
+  <script type="module" src="/ui.mjs"></script>
+</head>
+<body>
+<main>
+  <header class="brand"><span class="brand-icon" aria-hidden="true">+</span><div><h1>Minha medicação</h1><p>Protótipo acadêmico · dados fictícios</p></div></header>
+  <form id="setup" class="card">
+    <h2>Experimentar o aplicativo</h2>
+    <p>Escolha o que você quer fazer. O aplicativo mostra a orientação ao iniciar.</p>
+    <div class="setup-fields">
+      <label>Tarefa<select name="task"><option value="C2">Comparar dois registros</option><option value="C4">Entender o estado de um registro</option></select></label>
+      <label>Variante<select name="variant"><option value="B">B · Rótulos explícitos</option><option value="A">A · Rótulos curtos</option></select></label>
+    </div>
+    <button class="primary">Iniciar tarefa</button>
+  </form>
+  <p id="error" role="alert"></p>
+  <section id="attempt" hidden>
+    <aside class="brief"><strong>O que fazer nesta tarefa</strong><p id="instruction"></p></aside>
+    <nav id="navigation" aria-label="Navegação do aplicativo" hidden></nav>
+    <section id="screen" class="card" aria-labelledby="heading">
+      <h2 id="heading" tabindex="-1"></h2>
+      <div id="content"></div>
+      <div id="actions"></div>
+    </section>
+    <form id="answer" class="card" hidden>
+      <h2>Sua resposta</h2>
+      <label>Qual opção corresponde ao que você consultou?
+        <select id="answer-choice" required></select>
+      </label>
+      <button type="submit" class="primary">Selecionar resposta</button>
+      <p id="selected" role="status" hidden></p>
+    </form>
+    <div id="outcome-controls" hidden></div>
+    <details id="audit" class="card" hidden><summary>Ver registro da tentativa</summary><pre id="events"></pre></details>
+    <button id="restart" class="secondary" type="button" hidden>Escolher outra tarefa</button>
+  </section>
+</main>
+</body>
+</html>
